@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 615501dbe4f3fe94fbf4b564abb10237, type: 3}
+  m_Name: ModConfig
+  m_EditorClassIdentifier: 
+  id: TheAntitheticalDungeon
+  title: The Antithetical Dungeon
+  author: BigCrunch22
+  description: "[i]Ahh... These are some pretty incredible objects. I can't believe
+    I made them all by myself. Seeing the pathways so easily makes it quite trivial,
+    but the visuals are just amazing. I wonder how many times I can expand this? This
+    makes for some good brain exer... Hmmm? What kind of entity is this? Also, how
+    did something manage to get inside my objects. I need to observe this.[/i]\r\n\r\n[b]Ugh...
+    I was supposed to be navigating a virtual dungeon. What happened?[/b]\r\n\r\n---------------------------------------------\r\nObject
+    1: Code Blue\r\nObject 2: Project Red\r\n\r\nNavigate your way out of this strange
+    dungeon you have stepped yourself into and get yourself out of here. Also, avoid
+    extremely shady offerings from now on. It's not worth the money you're getting.\r\n---------------------------------------------\r\n\r\nIdea/Implementer
+    - BigCrunch22\r\n\r\nTP Supported!\r\n\r\nIf someone wants to add TP Support/Logging/Anything
+    useful, you have my approval for that"
+  version: 1.0
+  outputFolder: build
+  previewImage: {fileID: 2800000, guid: 9cc80ba6cec2e8b41af17242e1ce465a, type: 3}

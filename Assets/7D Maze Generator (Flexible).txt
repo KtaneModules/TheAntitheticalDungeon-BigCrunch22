@@ -1,0 +1,412 @@
+void GenerateMazeOriginShift(int mazerow, int mazecolumn, int mazefloor, int mazetimeline, int mazechance, int mazeinitial, int mazecondition)
+{
+	if (mazerow > 0 && mazecolumn > 0  && mazefloor > 0 && mazetimeline > 0 && mazechance > 0 && mazeinitial > 0 && mazecondition > 0 && (mazerow + mazecolumn + mazefloor + mazetimeline + mazechance + mazeinitial + mazecondition) > 7)
+	{
+		MazeGenerated = new string[mazecondition,mazeinitial,mazechance,mazetimeline,mazefloor,mazecolumn,mazerow];
+		ConnectionsGenerated = new string[mazecondition,mazeinitial,mazechance,mazetimeline,mazefloor,mazecolumn,mazerow];
+		RandomAlteration = new int[mazecondition,mazeinitial,mazechance,mazetimeline,mazefloor,mazecolumn,mazerow];
+		for (int t = 0; t < mazecondition; t++)
+		{
+			for (int u = 0; u < mazeinitial; u++)
+			{
+				for (int v = 0; v < mazechance; v++)
+				{
+					for (int w = 0; w < mazetimeline; w++)
+					{
+						for (int z = 0; z < mazefloor; z++)
+						{
+							for (int x = 0; x < mazecolumn; x++)
+							{
+								for (int y = 0; y < mazerow; y++)
+								{
+									//U = Up, D = Down, L = Left, R = Right, T = Top, B = Bottom, F = Future, P = Past, O = Outcome, C = Cause, H = Change, E = Revert, A = Ascend, S = Descend
+									MazeGenerated[t,u,v,w,z,x,y] = "UDLRTBFPOCHEAS";
+									RandomAlteration[t,u,v,w,z,x,y] = UnityEngine.Random.Range(0,2);
+									if (y < mazerow - 1)
+									{
+										ConnectionsGenerated[t,u,v,w,z,x,y] = "R";
+									}
+									
+									else
+									{
+										if (x < mazecolumn - 1)
+										{
+											ConnectionsGenerated[t,u,v,w,z,x,y] = "D";
+										}
+										
+										else
+										{
+											if (z < mazefloor - 1)
+											{
+												ConnectionsGenerated[t,u,v,w,z,x,y] = "B";
+											}
+											
+											else
+											{
+												if (w < mazetimeline - 1)
+												{
+													ConnectionsGenerated[t,u,v,w,z,x,y] = "P";
+												}
+												
+												else
+												{
+													if (v < mazechance - 1)
+													{
+														ConnectionsGenerated[t,u,v,w,z,x,y] = "C";
+													}
+													
+													else
+													{
+														if (u < mazeinitial - 1)
+														{
+															ConnectionsGenerated[t,u,v,w,z,x,y] = "E";
+														}
+														
+														else
+														{
+															if (t < mazecondition - 1)
+															{
+																ConnectionsGenerated[t,u,v,w,z,x,y] = "S";
+															}
+															
+															else
+															{
+																ConnectionsGenerated[t,u,v,w,z,x,y] = "X";
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+									
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		int CurrentRow = mazerow - 1, CurrentColumn = mazecolumn - 1, CurrentFloor = mazefloor - 1, CurrentTimeline = mazetimeline - 1, CurrentChance = mazechance - 1, CurrentInitial = mazeinitial - 1, CurrentCondition = mazecondition - 1;
+		for (int x = 0; x < ForcedSteps; x++)
+		{
+			bool StepValid = false;
+			do
+			{
+				int Movement = UnityEngine.Random.Range(0,14);
+				switch(Movement) // Remove the "if" statement if you want to generate a looping maze.
+				{
+					case 0:
+						//if (CurrentColumn != 0)
+						//{
+							ConnectionsGenerated[CurrentCondition,CurrentInitial,CurrentChance,CurrentTimeline,CurrentFloor,CurrentColumn,CurrentRow] = "U";
+							CurrentColumn = ((CurrentColumn - 1) + mazecolumn) % mazecolumn;
+							ConnectionsGenerated[CurrentCondition,CurrentInitial,CurrentChance,CurrentTimeline,CurrentFloor,CurrentColumn,CurrentRow] = "X";
+							StepValid = true;
+						//}
+						break;
+					case 1:
+						//if (CurrentColumn != mazecolumn - 1)
+						//{
+							ConnectionsGenerated[CurrentCondition,CurrentInitial,CurrentChance,CurrentTimeline,CurrentFloor,CurrentColumn,CurrentRow] = "D";
+							CurrentColumn = (CurrentColumn + 1) % mazecolumn;
+							ConnectionsGenerated[CurrentCondition,CurrentInitial,CurrentChance,CurrentTimeline,CurrentFloor,CurrentColumn,CurrentRow] = "X";
+							StepValid = true;
+						//}
+						
+						break;
+					case 2:
+						//if (CurrentRow != 0)
+						//{
+							ConnectionsGenerated[CurrentCondition,CurrentInitial,CurrentChance,CurrentTimeline,CurrentFloor,CurrentColumn,CurrentRow] = "L";
+							CurrentRow = ((CurrentRow - 1) + mazerow) % mazerow;
+							ConnectionsGenerated[CurrentCondition,CurrentInitial,CurrentChance,CurrentTimeline,CurrentFloor,CurrentColumn,CurrentRow] = "X";
+							StepValid = true;
+						//}
+						break;
+					case 3:
+						//if (CurrentRow != mazerow - 1)
+						//{
+							ConnectionsGenerated[CurrentCondition,CurrentInitial,CurrentChance,CurrentTimeline,CurrentFloor,CurrentColumn,CurrentRow] = "R";
+							CurrentRow = (CurrentRow + 1) % mazerow;
+							ConnectionsGenerated[CurrentCondition,CurrentInitial,CurrentChance,CurrentTimeline,CurrentFloor,CurrentColumn,CurrentRow] = "X";
+							StepValid = true;
+						//}
+						break;
+					case 4:
+						//if (CurrentFloor != 0)
+						//{
+							ConnectionsGenerated[CurrentCondition,CurrentInitial,CurrentChance,CurrentTimeline,CurrentFloor,CurrentColumn,CurrentRow] = "T";
+							CurrentFloor = ((CurrentFloor - 1) + mazefloor) % mazefloor;
+							ConnectionsGenerated[CurrentCondition,CurrentInitial,CurrentChance,CurrentTimeline,CurrentFloor,CurrentColumn,CurrentRow] = "X";
+							StepValid = true;
+						//}
+						break;
+					case 5:
+						//if (CurrentFloor != mazefloor - 1)
+						//{
+							ConnectionsGenerated[CurrentCondition,CurrentInitial,CurrentChance,CurrentTimeline,CurrentFloor,CurrentColumn,CurrentRow] = "B";
+							CurrentFloor = (CurrentFloor + 1) % mazefloor;
+							ConnectionsGenerated[CurrentCondition,CurrentInitial,CurrentChance,CurrentTimeline,CurrentFloor,CurrentColumn,CurrentRow] = "X";
+							StepValid = true;
+						//}
+						break;
+					case 6:
+						//if (CurrentTimeline != 0)
+						//{
+							ConnectionsGenerated[CurrentCondition,CurrentInitial,CurrentChance,CurrentTimeline,CurrentFloor,CurrentColumn,CurrentRow] = "F";
+							CurrentTimeline = ((CurrentTimeline - 1) + mazetimeline) % mazetimeline;
+							ConnectionsGenerated[CurrentCondition,CurrentInitial,CurrentChance,CurrentTimeline,CurrentFloor,CurrentColumn,CurrentRow] = "X";
+							StepValid = true;
+						//}
+						break;
+					case 7:
+						//if (CurrentTimeline != mazetimeline - 1)
+						//{
+							ConnectionsGenerated[CurrentCondition,CurrentInitial,CurrentChance,CurrentTimeline,CurrentFloor,CurrentColumn,CurrentRow] = "P";
+							CurrentTimeline = (CurrentTimeline + 1) % mazetimeline;
+							ConnectionsGenerated[CurrentCondition,CurrentInitial,CurrentChance,CurrentTimeline,CurrentFloor,CurrentColumn,CurrentRow] = "X";
+							StepValid = true;
+						//}
+						break;
+					case 8:
+						//if (CurrentChance != 0)
+						//{
+							ConnectionsGenerated[CurrentCondition,CurrentInitial,CurrentChance,CurrentTimeline,CurrentFloor,CurrentColumn,CurrentRow] = "O";
+							CurrentChance = ((CurrentChance - 1) + mazechance) % mazechance;
+							ConnectionsGenerated[CurrentCondition,CurrentInitial,CurrentChance,CurrentTimeline,CurrentFloor,CurrentColumn,CurrentRow] = "X";
+							StepValid = true;
+						//}
+						break;
+					case 9:
+						//if (CurrentChance != mazechance - 1)
+						//{
+							ConnectionsGenerated[CurrentCondition,CurrentInitial,CurrentChance,CurrentTimeline,CurrentFloor,CurrentColumn,CurrentRow] = "C";
+							CurrentChance = (CurrentChance + 1) % mazechance;
+							ConnectionsGenerated[CurrentCondition,CurrentInitial,CurrentChance,CurrentTimeline,CurrentFloor,CurrentColumn,CurrentRow] = "X";
+							StepValid = true;
+						//}
+						break;
+					case 10:
+						//if (CurrentInitial != 0)
+						//{
+							ConnectionsGenerated[CurrentCondition,CurrentInitial,CurrentChance,CurrentTimeline,CurrentFloor,CurrentColumn,CurrentRow] = "H";
+							CurrentInitial = ((CurrentInitial - 1) + mazeinitial) % mazeinitial;
+							ConnectionsGenerated[CurrentCondition,CurrentInitial,CurrentChance,CurrentTimeline,CurrentFloor,CurrentColumn,CurrentRow] = "X";
+							StepValid = true;
+						//}
+						break;
+					case 11:
+						//if (CurrentInitial != mazeinitial - 1)
+						//{
+							ConnectionsGenerated[CurrentCondition,CurrentInitial,CurrentChance,CurrentTimeline,CurrentFloor,CurrentColumn,CurrentRow] = "E";
+							CurrentInitial = (CurrentInitial + 1) % mazeinitial;
+							ConnectionsGenerated[CurrentCondition,CurrentInitial,CurrentChance,CurrentTimeline,CurrentFloor,CurrentColumn,CurrentRow] = "X";
+							StepValid = true;
+						//}
+						break;
+					case 12:
+						//if (CurrentCondition != 0)
+						//{
+							ConnectionsGenerated[CurrentCondition,CurrentInitial,CurrentChance,CurrentTimeline,CurrentFloor,CurrentColumn,CurrentRow] = "A";
+							CurrentCondition = ((CurrentCondition - 1) + mazecondition) % mazecondition;
+							ConnectionsGenerated[CurrentCondition,CurrentInitial,CurrentChance,CurrentTimeline,CurrentFloor,CurrentColumn,CurrentRow] = "X";
+							StepValid = true;
+						//}
+						break;
+					case 13:
+						//if (CurrentCondition != mazecondition - 1)
+						//{
+							ConnectionsGenerated[CurrentCondition,CurrentInitial,CurrentChance,CurrentTimeline,CurrentFloor,CurrentColumn,CurrentRow] = "S";
+							CurrentCondition = (CurrentCondition + 1) % mazecondition;
+							ConnectionsGenerated[CurrentCondition,CurrentInitial,CurrentChance,CurrentTimeline,CurrentFloor,CurrentColumn,CurrentRow] = "X";
+							StepValid = true;
+						//}
+						break;
+					default:
+						break;
+				}
+			}
+			while (!StepValid);
+		}
+		
+		for (int t = 0; t < mazecondition; t++)
+		{
+			for (int u = 0; u < mazeinitial; u++)
+			{
+				for (int v = 0; v < mazechance; v++)
+				{
+					for (int w = 0; w < mazetimeline; w++)
+					{
+						for (int z = 0; z < mazefloor; z++)
+						{
+							for (int x = 0; x < mazecolumn; x++)
+							{
+								for (int y = 0; y < mazerow; y++)
+								{
+									switch(ConnectionsGenerated[t,u,v,w,z,x,y])
+									{
+										case "U":
+											MazeGenerated[t,u,v,w,z,x,y] = MazeGenerated[t,u,v,w,z,x,y].Replace("U", "");
+											MazeGenerated[t,u,v,w,z,((x-1)+mazecolumn)%mazecolumn,y] = MazeGenerated[t,u,v,w,z,((x-1)+mazecolumn)%mazecolumn,y].Replace("D", "");
+											break;
+										case "D":
+											MazeGenerated[t,u,v,w,z,x,y] = MazeGenerated[t,u,v,w,z,x,y].Replace("D", "");
+											MazeGenerated[t,u,v,w,z,(x+1)%mazecolumn,y] = MazeGenerated[t,u,v,w,z,(x+1)%mazecolumn,y].Replace("U", "");
+											break;
+										case "L":
+											MazeGenerated[t,u,v,w,z,x,y] = MazeGenerated[t,u,v,w,z,x,y].Replace("L", "");
+											MazeGenerated[t,u,v,w,z,x,((y-1)+mazerow)%mazerow] = MazeGenerated[t,u,v,w,z,x,((y-1)+mazerow)%mazerow].Replace("R", "");
+											break;
+										case "R":
+											MazeGenerated[t,u,v,w,z,x,y] = MazeGenerated[t,u,v,w,z,x,y].Replace("R", "");
+											MazeGenerated[t,u,v,w,z,x,(y+1)%mazerow] = MazeGenerated[t,u,v,w,z,x,(y+1)%mazerow].Replace("L", "");
+											break;
+										case "T":
+											MazeGenerated[t,u,v,w,z,x,y] = MazeGenerated[t,u,v,w,z,x,y].Replace("T", "");
+											MazeGenerated[t,u,v,w,((z-1)+mazefloor)%mazefloor,x,y] = MazeGenerated[t,u,v,w,((z-1)+mazefloor)%mazefloor,x,y].Replace("B", "");
+											break;
+										case "B":
+											MazeGenerated[t,u,v,w,z,x,y] = MazeGenerated[t,u,v,w,z,x,y].Replace("B", "");
+											MazeGenerated[t,u,v,w,(z+1)%mazefloor,x,y] = MazeGenerated[t,u,v,w,(z+1)%mazefloor,x,y].Replace("T", "");
+											break;
+										case "F":
+											MazeGenerated[t,u,v,w,z,x,y] = MazeGenerated[t,u,v,w,z,x,y].Replace("F", "");
+											MazeGenerated[t,u,v,((w-1)+mazetimeline)%mazetimeline,z,x,y] = MazeGenerated[t,u,v,((w-1)+mazetimeline)%mazetimeline,z,x,y].Replace("P", "");
+											break;
+										case "P":
+											MazeGenerated[t,u,v,w,z,x,y] = MazeGenerated[t,u,v,w,z,x,y].Replace("P", "");
+											MazeGenerated[t,u,v,(w+1)%mazetimeline,z,x,y] = MazeGenerated[t,u,v,(w+1)%mazetimeline,z,x,y].Replace("F", "");
+											break;
+										case "O":
+											MazeGenerated[t,u,v,w,z,x,y] = MazeGenerated[t,u,v,w,z,x,y].Replace("O", "");
+											MazeGenerated[t,u,((v-1)+mazechance)%mazechance,w,z,x,y] = MazeGenerated[t,u,((v-1)+mazechance)%mazechance,w,z,x,y].Replace("C", "");
+											break;
+										case "C":
+											MazeGenerated[t,u,v,w,z,x,y] = MazeGenerated[t,u,v,w,z,x,y].Replace("C", "");
+											MazeGenerated[t,u,(v+1)%mazechance,w,z,x,y] = MazeGenerated[t,u,(v+1)%mazechance,w,z,x,y].Replace("O", "");
+											break;
+										case "H":
+											MazeGenerated[t,u,v,w,z,x,y] = MazeGenerated[t,u,v,w,z,x,y].Replace("H", "");
+											MazeGenerated[t,((u-1)+mazeinitial)%mazeinitial,v,w,z,x,y] = MazeGenerated[t,((u-1)+mazeinitial)%mazeinitial,v,w,z,x,y].Replace("E", "");
+											break;
+										case "E":
+											MazeGenerated[t,u,v,w,z,x,y] = MazeGenerated[t,u,v,w,z,x,y].Replace("E", "");
+											MazeGenerated[t,(u+1)%mazeinitial,v,w,z,x,y] = MazeGenerated[t,(u+1)%mazeinitial,v,w,z,x,y].Replace("H", "");
+											break;
+										case "A":
+											MazeGenerated[t,u,v,w,z,x,y] = MazeGenerated[t,u,v,w,z,x,y].Replace("A", "");
+											MazeGenerated[((t-1)+mazecondition)%mazecondition,u,v,w,z,x,y] = MazeGenerated[((t-1)+mazecondition)%mazecondition,u,v,w,z,x,y].Replace("S", "");
+											break;
+										case "S":
+											MazeGenerated[t,u,v,w,z,x,y] = MazeGenerated[t,u,v,w,z,x,y].Replace("S", "");
+											MazeGenerated[(t+1)%mazecondition,u,v,w,z,x,y] = MazeGenerated[(t+1)%mazecondition,u,v,w,z,x,y].Replace("A", "");
+											break;
+										default:
+											break;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		Debug.LogFormat("[Suffering Maze #{0}] < Maze Pointers Generated by the Module >", moduleId);
+		for (int t = 0; t < mazecondition; t++)
+		{
+			if (mazecondition != 1)
+			{
+				Debug.LogFormat("[Suffering Maze #{0}] Connection Condition {1}:", moduleId, t.ToString());
+			}
+			for (int u = 0; u < mazeinitial; u++)
+			{
+				if (mazeinitial != 1)
+				{
+					Debug.LogFormat("[Suffering Maze #{0}] Connection Scenario {1}:", moduleId, u.ToString());
+				}
+				for (int v = 0; v < mazechance; v++)
+				{
+					if (mazechance != 1)
+					{
+						Debug.LogFormat("[Suffering Maze #{0}] Connection Probability {1}:", moduleId, v.ToString());
+					}
+					for (int w = 0; w < mazetimeline; w++)
+					{
+						if (mazetimeline != 1)
+						{
+							Debug.LogFormat("[Suffering Maze #{0}] Connection Timeline {1}:", moduleId, w.ToString());
+						}
+						for (int z = 0; z < mazefloor; z++)
+						{
+							if (mazefloor != 1)
+							{
+								Debug.LogFormat("[Suffering Maze #{0}] Connection Floor {1}:", moduleId, z.ToString());
+							}
+							for (int x = 0; x < mazecolumn; x++)
+							{
+								string Mazery2 = "";
+								for (int y = 0; y < mazerow; y++)
+								{
+									Mazery2 += ConnectionsGenerated[t,u,v,w,z,x,y];
+								}
+								Debug.LogFormat("[Suffering Maze #{0}] {1}", moduleId, Mazery2);
+							}
+							Debug.LogFormat("[Suffering Maze #{0}] ----------------------------------------------------", moduleId);
+						}
+					}
+				}
+			}
+		}
+		
+		Debug.LogFormat("[Suffering Maze #{0}] ----------------------------------------------------", moduleId);
+		Debug.LogFormat("[Suffering Maze #{0}] < Maze Walls Generated by the Module >", moduleId);
+		for (int t = 0; t < mazecondition; t++)
+		{
+			if (mazecondition != 1)
+			{
+				Debug.LogFormat("[Suffering Maze #{0}] Condition {1}:", moduleId, t.ToString());
+			}
+			for (int u = 0; u < mazeinitial; u++)
+			{
+				if (mazeinitial != 1)
+				{
+					Debug.LogFormat("[Suffering Maze #{0}] Scenario {1}:", moduleId, u.ToString());
+				}
+				for (int v = 0; v < mazechance; v++)
+				{
+					if (mazechance != 1)
+					{
+						Debug.LogFormat("[Suffering Maze #{0}] Probability {1}:", moduleId, v.ToString());
+					}
+					for (int w = 0; w < mazetimeline; w++)
+					{
+						if (mazetimeline != 1)
+						{
+							Debug.LogFormat("[Suffering Maze #{0}] Timeline {1}:", moduleId, w.ToString());
+						}
+						for (int z = 0; z < mazefloor; z++)
+						{
+							if (mazefloor != 1)
+							{
+								Debug.LogFormat("[Suffering Maze #{0}] Floor {1}:", moduleId, z.ToString());
+							}
+							for (int x = 0; x < mazecolumn; x++)
+							{
+								string Mazery = "";
+								for (int y = 0; y < mazerow; y++)
+								{
+									Mazery += "[" + MazeGenerated[t,u,v,w,z,x,y] + "]";
+								}
+								Debug.LogFormat("[Suffering Maze #{0}] {1}", moduleId, Mazery);
+							}
+							Debug.LogFormat("[Suffering Maze #{0}] ----------------------------------------------------", moduleId);
+						}
+					}
+				}
+			}
+		}
+	}
+}
