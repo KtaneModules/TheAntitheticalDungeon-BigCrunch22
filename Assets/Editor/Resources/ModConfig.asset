@@ -27,4 +27,4 @@ MonoBehaviour:
     useful, you have my approval for that"
   version: 1.0
   outputFolder: build
-  previewImage: {fileID: 2800000, guid: 9cc80ba6cec2e8b41af17242e1ce465a, type: 3}
+  previewImage: {fileID: 2800000, guid: 176dccfd993e2254bb803fa537b98d17, type: 3}

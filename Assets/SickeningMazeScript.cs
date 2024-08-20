@@ -732,7 +732,7 @@ public class SickeningMazeScript : MonoBehaviour
 		Module.HandlePass();
 		ModuleSolved = true;
 		yield return new WaitForSecondsRealtime(1.5f);
-		string Scare = "BFDXZQKVHMSLIYENWROACPT-GU+J;:";
+		string Scare = "BFDXZQKVHMSLIYENWROACPT2GU3J57";
 		for (int x = 0; x < 8; x++)
 		{
 			Audio.PlaySoundAtTransform(SFX[14].name, transform);

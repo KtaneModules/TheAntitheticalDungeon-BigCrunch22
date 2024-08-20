@@ -33,7 +33,7 @@ public class SufferingMazeScript : MonoBehaviour
 	int MazeRow = 2, MazeColumn = 2, MazeFloor = 2, MazeTimeline = 2, MazeChance = 2, MazeInitial = 2, MazeCondition = 2; 
 	int ForcedSteps = 50000, Alternator =  0;
 	int[] CurrentToggles = {0,0,0,0};
-	string TheBind = "BFDXZQKVHMSLIYENWROACPT-GU+J;:";
+	string TheBind = "BFDXZQKVHMSLIYENWROACPT2GU3J57";
 
     bool Interactable = true, Determinable = false, Travelling = false, Striking = false;
 
